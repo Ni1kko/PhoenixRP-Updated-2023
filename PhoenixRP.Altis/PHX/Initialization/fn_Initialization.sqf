@@ -88,6 +88,11 @@ switch (playerSide) do {
     case east: {call PHX(initHAVOC)};
 };
 
+if (LIFE_SETTINGS(getNumber,"enableUndercover") isEqualTo 1) then {
+    [getPlayerUID player] remoteExecCall ["PHXSRV_fnc_getUndercover", RSERV];
+    waitUntil { PHX_SideChosen };
+};
+
 life_paycheck = [] call PHX_fnc_getPaycheck;
 
 if (FETCH_CONST(life_adminlevel) > 0) then { [player, "staff"] remoteExecCall ["PHXSRV_fnc_handleChat", RSERV] };
@@ -178,10 +183,10 @@ if (LIFE_SETTINGS(getNumber,"enableSnow") isEqualTo 1) then {
 if (playerSide in [east, civilian] && { life_is_arrested_police || life_is_arrested_havoc }) then {
 	player switchMove "";
 
-    	life_firstSpawn = false;
-    	life_is_arrested = false;
+    life_firstSpawn = false;
+    life_is_arrested = false;
 
-    	[player, life_jail_time, west] spawn life_fnc_jail;
+    [player, life_jail_time, west] spawn life_fnc_jail;
 } else {
 	// [] call life_fnc_spawnMenu;
 	[] call PHX_fnc_mainMenu;

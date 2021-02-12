@@ -43,6 +43,8 @@ class CfgSettings {
     /* Main Menu Configuration */
     mainMenu_enabled = true;
 
+    enableUndercover = true;
+
     // Credit to the ArmaAchilles developers for this list...
     mainMenu_animations[] = {
         "hubbriefing_loop",
