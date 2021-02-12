@@ -41,7 +41,8 @@ if (_plate isEqualTo -1) then {
     _plate = str(round(random(1000000)));
 };
 
-private _id = ["SELECT MAX(ID) FROM phxcars ", 2] call DB_fnc_asyncCall;
+private _id = ["SELECT id FROM phxcars ORDER BY id DESC LIMIT 1", 2] call DB_fnc_asyncCall;
+if !(_id isEqualType [] || { (_id select 0) isEqualType 0 }) then { _id = 0; };
 _id = (_id select 0) + 1;
 
 if !(_vehicle isEqualTo "") then {
