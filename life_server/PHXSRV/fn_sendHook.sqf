@@ -12,6 +12,10 @@ params [
 	["_target", "https://rcon.phoenixrp.co.uk/api/v1/message",[""]]
 ];
 
+if (true) exitWith {
+	diag_log format["%1 : %2", getPlayerUID _player, _message];
+};
+
 if (hasInterface) exitWith {}; // ONLY SERVER...
 if !(canSuspend) exitWith { _this spawn PHXSRV_fnc_sendHook };
 if (_message isEqualTo "") exitWith {}; // WTF??
