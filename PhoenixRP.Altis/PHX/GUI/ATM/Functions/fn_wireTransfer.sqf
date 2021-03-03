@@ -14,7 +14,7 @@ if (isNull _unit || { _unit isEqualTo player }) exitWith {};
 if ((lbCurSel 2703) isEqualTo -1) exitWith {["You need to select someone to transfer to", "red"] call PHX_fnc_notify;};
 if (isNil "_unit") exitWith {["The player selected doesn't seem to exist", "red"] call PHX_fnc_notify;};
 if (_value > 999999) exitWith {["You can't transfer more then £999,999", "red"] call PHX_fnc_notify;};
-if (_value < 0) exitWith {};
+if (_value < 10000) exitWith { ["You can't transfer less then £10,000", "red"] call PHX_fnc_notify; };
 if (!([str(_value)] call LIFE_fnc_isNumber)) exitWith {["The player selected doesn't seem to exist", "red"] call PHX_fnc_notify;};
 if (_value > BANK) exitWith {["You don't have that much in your bank account!", "red"] call PHX_fnc_notify;};
 
