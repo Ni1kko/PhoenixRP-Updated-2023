@@ -3,10 +3,10 @@ The Altis Life mission for PhoenixRP. Published as the server has closed and I'd
 
 ## Authors
 Due to claims by Kevin I've had to list the people who actually wrote the code within this repo and authored it's files.
-https://github.com/AsYetUntitled/Framework/blob/v5.X.X/ Contributors
-Myself (Scarso)
-Zyn
-Conner Merlin
+https://github.com/AsYetUntitled/Framework/blob/v5.X.X/ Contributors,
+Myself (Scarso),
+Zyn,
+Conner Merlin,
 Sig
 
 ## AsYetUntitled Framework
