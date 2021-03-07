@@ -1,5 +1,5 @@
 # PhoenixRP-Altis-Mission
-The Altis Life mission for PhoenixRP. Published as the server has closed and I'd like my work to be able to be used as an education tool. This mission was last updated 20/06/2020. I left and so don't have anything after this point. Most changes made were minimal anyway and so should be easily implemented by reading the changelog.
+The Altis Life mission hosted by PhoenixRP. Published as the server has closed and Myself, Zyn, Conner and Sig would like our work to be able to be used as an education tool. This mission was last updated 20/06/2020. I left and so don't have anything after this point. Most changes made were minimal anyway and so should be easily implemented by reading the changelog.
 
 ## Authors
 Due to claims by Kevin I've had to list the people who actually wrote the code within this repo and authored it's files.
