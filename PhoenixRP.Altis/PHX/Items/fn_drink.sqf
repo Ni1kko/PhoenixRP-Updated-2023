@@ -22,7 +22,7 @@ private _drunk = switch _item do {
 PHX_drink = PHX_drink + _drunk;
 
 switch true do {
-  case (PHX_drink < 10): { ["It's strange how 8 bottles of water seems impossible, but this is so damn easy!", "cyan"] call PHX_fnc_notify; };
-  case (PHX_drink >= 10): { ["You are over the legal limit. Better call a taxi!", "cyan"] call PHX_fnc_notify; };
   case (PHX_drink >= 50): { [] spawn PHX_fnc_overDose; };
+  case (PHX_drink >= 10): { ["You are over the legal limit. Better call a taxi!", "cyan"] call PHX_fnc_notify; };
+  default { ["It's strange how 8 bottles of water seems impossible, but this is so damn easy!", "cyan"] call PHX_fnc_notify; };
 };
