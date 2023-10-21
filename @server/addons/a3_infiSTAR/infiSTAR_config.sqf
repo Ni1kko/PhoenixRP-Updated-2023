@@ -17,14 +17,14 @@
 	
 	This is   VERY IMPORTANT   as it is needed to KICK & BAN people.
 */
-_serverCommandPassword = 'LH1iLkHxDMalhQLmblvlk0Bc0XT1Qf4u25yLMW2IZgTuj5xEeRTlCkPE3lh4rqc5';
+_serverCommandPassword = 'your pass here';
 
 /*
 	"_passwordAdmin" is passwordAdmin - in your servers config.cfg, needed for servercommands from client
 	
 	This is used to be able to use the "login" function ingame. Will log you in as Arma "Admin".
 */
-_passwordAdmin = 'HlxFBuShmuf318diBTlln1zDGz54lsSJqaPQJo2rUBBPxCppx72mbwdqbIo5XL8q';
+_passwordAdmin = 'your pass here';
 /* _serverCommandPassword and _passwordAdmin should always be different passwords or it could cause problems! */
 
 
@@ -83,7 +83,7 @@ _use_html_load_on_adminmenu = true;		/* default and recommended is TRUE. infiSTA
 _adminUIDandAccess =
 [
 	[
-		['76561198128252975','76561198077876964','76561198159929475','76561198010119568'],	// Management
+		['your steam id'],	// Management
 		[
 			'Teleport On Map Click','Teleport - Target To Me','Teleport - Me To Target','Teleport In Facing Direction (10m steps)',
 			'spectating','AdminConsole','Delete Vehicle','FlyUp','EjectTarget','ToggleVehLock','ShowGear',
@@ -104,12 +104,6 @@ _adminUIDandAccess =
 			'Request Steam Name','Dump unique client variables',
 			'Restrain','Unrestrain',
 			'Arsenal'	// Adds Arsenal to the mousewheel actions if you press "," on the Numpad!
-		]
-	],
-	[
-		['76561198387899901','76561198085778779','76561198148236693','76561198048851858','76561198061556869','76561198174274401','76561197999731140','76561198001281919','76561198011734960','76561198228746052','76561198125082148','76561198347148916','76561198058569136','76561198070490706','76561198086974672','76561198129855258','76561198125958759','76561198046393803'],
-		[
-
 		]
 	],
 	[
@@ -151,7 +145,6 @@ _USE_GLOBAL_BAN_CHECK = true;		/* if false, it can not kick or ban global banned
 _BAN_GLOBAL_BANNED_LOCALLY = false;	/* if false, it will kick global banned people */
 _UID_SKIP_GLOBAL_BAN_CHECK =
 [
-	"76561198081161552","76561198144749822","76561198128252975","76561198077876964","76561198159929475"
 ];
 /* ********************************************************************************* */
 /*            many checks should be set to true instead of false.                    */
@@ -629,129 +622,51 @@ try {
 			throw '<infiSTAR.de> This is not the Exile version and it would need many changes to run with Exile. Please go to www.infiSTAR.de and get the Exile version.';
 		};
 	};
-/****************************************************************************************************/
-/****************************************************************************************************/
-/****************************************************************************************************/
-fnc_CompilableString = {
-	_input = _this select 0;
-	_output = call {
-		if(_input isEqualType {})exitWith{(str(_input)) select [1,((count(str(_input)))-2)]};
-		if(_input isEqualType "")exitWith{_input};
-		""
+
+	fnc_CompilableString = {
+		_input = _this select 0;
+		_output = call {
+			if(_input isEqualType {})exitWith{(str(_input)) select [1,((count(str(_input)))-2)]};
+			if(_input isEqualType "")exitWith{_input};
+			""
+		};
+		_output
 	};
-	_output
-};
-fnc_CompilableString = compileFinal ([fnc_CompilableString] call fnc_CompilableString);
-publicVariable "fnc_CompilableString";
-fn_clean_bad = {
-	private _clean = _this;
-	_clean = toArray _clean;
-	_clean = _clean - [35];
-	_clean = toString _clean;
-	_clean
-};
-fn_clean_bad = compileFinal ([fn_clean_bad] call fnc_CompilableString);
-IAH_fnc_getIntFromString = {
-	params [["_input", "", [""]], ["_pos", 0, [0]]];
-	if (_input isEqualTo "") exitWith {-1};
-	private _n = (toArray (_input select [_pos, 1])) select 0;
-	_n
-};
-IAH_fnc_getIntFromString = compileFinal ([IAH_fnc_getIntFromString] call fnc_CompilableString);
-_response = "armalog" callExtension ("14af4c0b1cd6a&l=7e7386ac9fc5252dd974babfd84e9a07&sn="+str(toArray serverName));
-_isWindows = (productVersion param [6, "", [""]]) isEqualTo "Windows";
-if(_isWindows && _response isEqualTo "")exitWith{
-	diag_log "<infiSTAR.de> Can not load infiSTAR";
-	diag_log "<infiSTAR.de> DLLs not found!";
-};
-_armalog = ([_response] call IAH_fnc_getIntFromString isEqualTo 0x01);
-_response = _response select [1];
-_errorNote = {
-	[
-		[_this],
-		{
-			_text = _this param [0,"",[""]];
-			waitUntil{uiSleep 1;getClientStateNumber >= 10 && !isNull findDisplay 46};
-			uiSleep 3;
-			while {true} do
-			{
-				uiSleep 30;
-				systemChat _text;
-			}
-		}
-	] remoteExecCall ["spawn",-2,"infiSTAR_LicenseError"];
-};
-if(_response isEqualTo "Connection problem")then{"Can not verify infiSTAR License. Please report to admin@infiSTAR.de" call _errorNote;};
-if(_isWindows && !_armalog)exitWith{
-	diag_log "<infiSTAR.de> Can not load infiSTAR";
-	diag_log "<infiSTAR.de> 4af4c0b1cd6a";
-	diag_log "<infiSTAR.de> 7e7386ac9fc5252dd974babfd84e9a07";
-	diag_log format["<infiSTAR.de> %1",serverName];
-	diag_log format["<infiSTAR.de> %1",_response];
-};
-if(_isWindows && _armalog)then{
-	diag_log "<infiSTAR.de> infiSTAR dll loaded successfully";
-	diag_log format["<infiSTAR.de> %1",serverName];
-	diag_log format["<infiSTAR.de> %1",_response select [1]];
+	fnc_CompilableString = compileFinal ([fnc_CompilableString] call fnc_CompilableString);
+	publicVariable "fnc_CompilableString";
+	fn_clean_bad = {
+		private _clean = _this;
+		_clean = toArray _clean;
+		_clean = _clean - [35];
+		_clean = toString _clean;
+		_clean
+	};
+	fn_clean_bad = compileFinal ([fn_clean_bad] call fnc_CompilableString);
+	IAH_fnc_getIntFromString = {
+		params [["_input", "", [""]], ["_pos", 0, [0]]];
+		if (_input isEqualTo "") exitWith {-1};
+		private _n = (toArray (_input select [_pos, 1])) select 0;
+		_n
+	};
+	IAH_fnc_getIntFromString = compileFinal ([IAH_fnc_getIntFromString] call fnc_CompilableString);
+
+	diag_log "<infiSTAR.de> infiSTAR loaded successfully";
+	diag_log format["<infiSTAR.de> %1",serverName]; 
 	diag_log "<infiSTAR.de> Loading infiSTAR code..";
 
 	FN_CALL_LOG_DLL = {
 		params [["_filename", "LOG", [""]], ["_logentry", "NO INPUT", [""]]];
 		_filename = format["A3_%1_%2_%3", briefingName select [0,10], worldName select [0,10], _filename];
-		"armalog" callExtension ("2"+_filename+"|"+_logentry);
+		diag_log ("2"+_filename+"|"+_logentry);
 	};
-	FN_CALL_LOG_DLL = compileFinal ([FN_CALL_LOG_DLL] call fnc_CompilableString);
-
-	FN_ARMA_FETCHDATA = {
-		params [["_url", "", [""]]];
-		_url = _url call fn_clean_bad;
-		if (_url isEqualTo "") exitWith {""};
-		private _response = "armalog" callExtension format["6%1", _url];
-		if !(([_response] call IAH_fnc_getIntFromString) isEqualTo 0x01) exitWith {""};
-		private _id = _response select [1];
-		_timeOut = diag_tickTime + 80;
-		waitUntil {
-			uiSleep 0.2;
-			_response = "armalog" callExtension format["4%1", _id];
-			!(([_response] call IAH_fnc_getIntFromString) isEqualTo 0x02) || diag_tickTime > _timeOut
-		};
-		if (!(([_response] call IAH_fnc_getIntFromString) isEqualTo 0x01) || (diag_tickTime > _timeOut)) exitWith {""};
-		private _parts = [_response, 1] call IAH_fnc_getIntFromString;
-		if (_parts == 1) exitWith {_response select [2]};
-		private _output = _response select [2];
-		for "_i" from 1 to _parts - 1 do {
-			_response = "armalog" callExtension format["4%1|%2", _id, _i];
-			_output = _output + (_response select [2]);
-		};
-		_output
-	};
-	FN_ARMA_FETCHDATA = compileFinal ([FN_ARMA_FETCHDATA] call fnc_CompilableString);
-
-	FN_ARMA_FIREANDFORGET = {
-		params [["_url", "", [""]]];
-		_url = _url call fn_clean_bad;
-		if (_url isEqualTo "") exitWith {""};
-		"armalog" callExtension format["3%1", _url]
-	};
-	FN_ARMA_FIREANDFORGET = compileFinal ([FN_ARMA_FIREANDFORGET] call fnc_CompilableString);
-
-	FN_ARMA_REMOTELOG = {
-		params[["_logname",""],["_logentry",""]];
-		"armalog" callExtension ("9"+"a3"+"��"+_logname+"��"+_logentry+"��"+servername+"��03-03-2018 16-34-54 - v258��swagg730@gmail.com");
-	};
-	FN_ARMA_REMOTELOG = compileFinal ([FN_ARMA_REMOTELOG] call fnc_CompilableString);
-}
-else
-{
-	FN_CALL_LOG_DLL = {};
 	FN_ARMA_FETCHDATA = {};
 	FN_ARMA_FIREANDFORGET = {};
-	FN_ARMA_REMOTELOG = {};
-};
-FN_CALL_ExtDB = if (("extDB3" callExtension "9:VERSION") != "") then {{"extDB3" callExtension _this}} else {{"extDB2" callExtension _this}};
-/* ********************************************************************************* */
-/* ********************************************************************************* */
-/* ********************************************************************************* */
+	FN_ARMA_REMOTELOG = {
+		params[["_logname",""],["_logentry",""]];
+		diag_log ("2"+_logname+"|"+_logentry);
+	};
+	FN_CALL_ExtDB = if (("extDB3" callExtension "9:VERSION") != "") then {{"extDB3" callExtension _this}} else {{"extDB2" callExtension _this}};
+	
 	comment 'Antihack & AdminTools - Christian Lorenzen - www.infiSTAR.de - License: (CC)';
 	diag_log format['<infiSTAR.de> %1 - run.sqf - including AntiHack',time];
 	#include "A3AH.sqf"

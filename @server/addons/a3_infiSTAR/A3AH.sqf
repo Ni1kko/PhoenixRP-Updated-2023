@@ -454,7 +454,7 @@ fn_infiSTAR_checkGlobalBanSkip = compileFinal ([fn_infiSTAR_checkGlobalBanSkip] 
 "; if(_armalog)then{ _A3AHstring = _A3AHstring + "
 fn_infiSTAR_checkGlobalBanState = {
 	params ['_name','_uid','_owner'];
-	_res = 'armalog' callExtension format['5%1',_uid];
+	_res = '0';
 	if(_res isEqualTo '1')then{
 	"; if(_USE_GLOBAL_BAN_CHECK)then{ _A3AHstring = _A3AHstring + "
 		"; if(_BAN_GLOBAL_BANNED_LOCALLY)then{ _A3AHstring = _A3AHstring + "
@@ -982,9 +982,7 @@ if(_option isEqualTo -662)exitWith
 	{
 		_case = _inputArray;
 	};
-"; if(_MOD == 'Epoch')then{ _A3AHstring = _A3AHstring + "
-	if(_case == 0)exitWith{'epochserver' callExtension format['901|%1',_input1];};
-"; }; _A3AHstring = _A3AHstring + "
+
 	if(_case == 1)exitWith{'asd' serverCommand '#lock';};
 	if(_case == 2)exitWith{'asd' serverCommand '#unlock';};
 	if(_case == 3)exitWith{_puid = _input1;_name = _input2;_reason = _input3;[_name,_puid,_reason] call FNC_A3_infiSTARBAN;};
