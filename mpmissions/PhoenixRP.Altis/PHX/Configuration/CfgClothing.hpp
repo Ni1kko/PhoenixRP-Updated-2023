@@ -99,7 +99,7 @@ class CfgClothing {
                 { "H_Helmet_Skate", "", 250, "true" },
                 { "H_Hat_Tinfoil_F", "", 250, "true" },
                 { "H_Construction_basic_black_F", "", 2500, "true" },
-                { "H_Construction_basic_ornage_F", "", 2500, "true" },
+                { "H_Construction_basic_orange_F", "", 2500, "true" },
                 { "H_Construction_basic_vrana_F", "", 2500, "true" },
                 { "H_Construction_basic_red_F", "", 2500, "true" },
                 { "H_Construction_basic_yellow_F", "", 2500, "true" },
