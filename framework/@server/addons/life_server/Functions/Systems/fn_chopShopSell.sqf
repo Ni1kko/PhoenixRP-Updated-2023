@@ -30,3 +30,6 @@ life_action_inUse = false;
 remoteExecutedOwner publicVariableClient "life_action_inUse";
 [2,"You have sold a %1 for £%2.",true,[_displayName,[_price] call life_fnc_numberText]] remoteExecCall ["life_fnc_broadcast", remoteExecutedOwner];
 [50,"Chopped a vehicle"] remoteExecCall ["PHX_fnc_handleXP", remoteExecutedOwner];
+
+_vehicle setVariable ["vehicleThief",objNull,true];
+_vehicle setVariable ["IsBeingChopped",false,true];

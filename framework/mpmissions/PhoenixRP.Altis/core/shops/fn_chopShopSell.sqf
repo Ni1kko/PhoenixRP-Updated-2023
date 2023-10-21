@@ -25,6 +25,20 @@ if ((_vInfo isEqualTo []) && { !(_vehicle getVariable ["isAPC",false]) } && { !(
 if ((time - life_action_delay) < 5) exitWith {["Action Cancelled.", "red"] call PHX_fnc_notify;};
 life_action_delay = time;
 
+
+private _lastVehicleThief = _vehicle getVariable ["vehicleThief",objNull];
+
+if (_vehicle getVariable ["IsBeingChopped",false]) exitWith {
+    ["Vehicle is already being chopped.", "red"] call PHX_fnc_notify;
+};
+
+if not(_lastVehicleThief in [objNull, player]) exitWith {
+    ["Vehicle is already being chopped by: " + name _lastVehicleThief, "red"] call PHX_fnc_notify;
+};
+
+_vehicle setVariable ["vehicleThief",player,true];
+_vehicle setVariable ["IsBeingChopped",true,true];
+
 life_action_inUse = true;
 closeDialog 0;
 
@@ -43,7 +57,11 @@ if !(
         0.01,
         ""
     ] call PHX(handleProgress)
-) exitWith { life_action_inUse = false };
+) exitWith { 
+    life_action_inUse = false;
+    _vehicle setVariable ["vehicleThief",objNull,true];
+    _vehicle setVariable ["IsBeingChopped",false,true];
+};
 
 life_action_inUse = false;
 
