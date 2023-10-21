@@ -219,6 +219,7 @@ class CfgRemoteExec {
         F(HL_fnc_updateGang,HC)
 
         /* Functions for everyone */
+        F(bis_fnc_debugconsoleexec,ANYONE)
         F(BIS_fnc_effectKilledAirDestruction,ANYONE)
         F(BIS_fnc_effectKilledSecondaries,ANYONE)
         F(life_fnc_animSync,ANYONE)

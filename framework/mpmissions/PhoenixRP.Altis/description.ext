@@ -1,6 +1,9 @@
 disableChannels[] = {{0,true,true},{1,true,true},{2,true,true}};    // Disabled text and voice for global, side, and command channels. Syntax: disableChannels[] = {{channelID<number>, disableChat<bool>, disableVoice<bool>}};
 disabledAI = 1;
-enableDebugConsole = 1;
+enableDebugConsole[] = {
+    "76561199242507277",   //-- Ni1kko
+    "76561198140826891"    //-- Blade
+};
 allowFunctionsLog = 1;
  
 corpseManagerMode = 0;
