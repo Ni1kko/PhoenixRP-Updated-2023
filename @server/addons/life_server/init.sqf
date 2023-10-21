@@ -243,7 +243,9 @@ missionNameSpace setVariable ["PHX_Base_SW", (parseNumber (["gbase_SW"] call PHX
 } forEach ["gang_base", "gang_base_1", "gang_base_2"];
 
 // Donation Goal
-PHX_dateTime = call compile("real_date" callExtension "GMT");
+PHX_dateTime = systemTimeUTC;//call compile("real_date" callExtension "GMT");
+PHX_day = PHX_dateTime param [2, 0];
+
 
 private _isGoal = [parseNumber(["donation_goal_active"] call PHXSRV_fnc_getSetting), 1] call DB_fnc_bool;
 
@@ -251,7 +253,7 @@ if (_isGoal) then {
     missionNameSpace setVariable ["donationGoal", _isGoal, true];
 
     if ((parseNumber(["automated_goal_end"] call PHXSRV_fnc_getSetting)) isEqualTo 1) then {
-        if ((PHX_dateTime select 2) >= (parseNumber(["goal_end"] call PHXSRV_fnc_getSetting))) then {
+        if (PHX_day >= (parseNumber(["goal_end"] call PHXSRV_fnc_getSetting))) then {
             ["donation_goal_active", false] call PHXSRV_fnc_setSetting;
         };
     };
