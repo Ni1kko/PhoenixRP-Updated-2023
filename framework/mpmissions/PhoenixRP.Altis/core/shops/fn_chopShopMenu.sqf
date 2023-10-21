@@ -19,7 +19,7 @@ if !(createDialog "Chop_Shop") exitWith {["There was a problem opening the chop 
 
 private _control = CONTROL(39400,39402);
 {
-    if (alive _x) then {
+    if (alive _x AND not(_x getVariable ["IsBeingChopped",false])) then {
         _className = typeOf _x;
         _classNameLife = _className;
         _displayName = getText(configFile >> "CfgVehicles" >> _className >> "displayName");
