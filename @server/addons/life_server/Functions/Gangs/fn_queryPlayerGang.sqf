@@ -10,7 +10,7 @@ params [
     ["_gangID", -1, [0, ""]]
 ];
 
-private _queryResult = [format ["SELECT phxgangs.id, phxgangs.owner, phxgangs.name, phxgangs.tag, phxgangs.maxmembers, phxgangs.bank, phxgangs.message, PHXClients.ganglevel, phxgangs.tax, phxgangs.perks, phxgangs.level, phxgangs.xp, phxgangs.ranks FROM phxgangs INNER JOIN phxclients WHERE phxgangs.active='1' AND phxgangs.id='%1' AND PHXClients.playerid = '%2'", _gangID, _uid],2] call DB_fnc_asyncCall;
+private _queryResult = [format ["SELECT phxgangs.id, phxgangs.owner, phxgangs.name, phxgangs.tag, phxgangs.maxmembers, phxgangs.bank, phxgangs.message, phxclients.ganglevel, phxgangs.tax, phxgangs.perks, phxgangs.level, phxgangs.xp, phxgangs.ranks FROM phxgangs INNER JOIN phxclients WHERE phxgangs.active='1' AND phxgangs.id='%1' AND phxclients.playerid = '%2'", _gangID, _uid],2] call DB_fnc_asyncCall;
 
 if !(_queryResult isEqualTo []) then {
     _queryResult params ["_id"];
@@ -32,7 +32,7 @@ if !(_queryResult isEqualTo []) then {
     
     _queryResult set[12, _new];
 
-    private _allies = [format["SELECT phxgangs.name, PHXAlliances.allyID FROM phxalliances INNER JOIN phxgangs WHERE PHXAlliances.gangID = '%1' AND phxgangs.active = '1' AND PHXAlliances.active = '1' AND PHXAlliances.allyID = phxgangs.id", _id], 2, true] call DB_fnc_asyncCall;
+    private _allies = [format["SELECT phxgangs.name, phxalliances.allyID FROM phxalliances INNER JOIN phxgangs WHERE phxalliances.gangID = '%1' AND phxgangs.active = '1' AND phxalliances.active = '1' AND phxalliances.allyID = phxgangs.id", _id], 2, true] call DB_fnc_asyncCall;
     _queryResult set [13, _allies];
     
     private _members = [format["SELECT name, playerid, ganglevel FROM phxclients WHERE gangid = '%1'", _id], 2, true] call DB_fnc_asyncCall;

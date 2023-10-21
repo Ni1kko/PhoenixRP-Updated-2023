@@ -30,7 +30,7 @@ if ((_id select 5) isEqualType false) then { _id set[5, ([(_id select 5), 0] cal
 
 uiSleep 0.35;
 
-private _id = ["SELECT MAX(ID) FROM PHXids", 2] call DB_fnc_asyncCall;
+private _id = ["SELECT max(ID) FROM phxids", 2] call DB_fnc_asyncCall;
 
 // Update the ID for the ID Card on our client...
 [format["UPDATE phxclients SET cardID='%1' WHERE playerid ='%2' LIMIT 1",
