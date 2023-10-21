@@ -90,7 +90,7 @@ _wasIllegal = if (_wasIllegal isEqualTo 1) then { true } else { false };
 
 private _vehicle = objNull;
 
-_vehicle = createVehicle [(_vInfo select 2),(getMarkerPos _sp),[],0,"NONE"];
+_vehicle = createVehicle [(_vInfo select 2),_sp,[],0,"NONE"];
 _vehicle allowDamage false;
 _vehicle setPos _sp;
 _vehicle setVectorUp (surfaceNormal _sp);
