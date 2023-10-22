@@ -466,6 +466,89 @@ diag_log "----------------------------------------------------------------------
 diag_log format ["               End of Altis Life Server Init :: Total Execution Time %1 seconds ",(diag_tickTime) - _timeStamp];
 diag_log "----------------------------------------------------------------------------------------------------";
 
+addMissionEventHandler ["PlayerConnected", {
+    params [
+        ["_directPlayID",-100,[0]],		    // Number - is the unique DirectPlay ID. Quite useless as the number is too big for in-built string representation and gets rounded. It is also the same id used for user placed markers.
+        ["_steamID","",[""]],				// String - is getPlayerUID of the joining player. In Arma 3 it is also the same as Steam ID.
+        ["_name","",[""]],		   			// String - is profileName of the joining player.
+        ["_didJIP",false,[false]], 			// Boolean - is a flag that indicates whether or not the player joined after the mission has started (Joined In Progress). true when the player is JIP, otherwise false. (since Arma 3 v1.49)
+        ["_ownerID",-100,[0]],	   			// Number - is owner id of the joining player. Can be used for kick or ban purposes or just for publicVariableClient. (since Arma 3 v1.49) 
+        ["_directPlayIDStr","",[""]],		// String - same as _id but in string format, so could be exactly compared to user marker ids. (since Arma 3 v1.95) 
+        ["_customArgs",[]] 		            // User-Defined - custom passed args (since Arma 3 v2.03) 
+    ];
+
+    if(_steamID call PHXSVR_fnc_checkBanned) then{
+        diag_log format["%1 has been kicked for being banned!",_name];
+    };
+}];
+
+PHXSVR_fnc_checkBanned = {
+    private _player = param [0, objNull,["",objNull]];
+
+    private ["_steamID","_ownerID"];
+
+    if(typeName _spastic isEqualTo "OBJECT")then{
+        _steamID = getPlayerUID _player;
+        _ownerID = owner _player;
+    }else{
+        {
+            if(getPlayerUID _x isEqualTo _player)exitWith{
+                _steamID = getPlayerUID _x;
+                _ownerID = owner _x;
+            };
+        }forEach allPlayers;
+    };
+
+    if(isNil "_steamID" OR isNil "_ownerID")exitWith{false};
+
+   //check db for bans and kick if banned `Table : phxbans`
+    private _query = [format["SELECT reason FROM phxbans WHERE uid = '%1'",_steamID], 2] call DB_fnc_asyncCall;
+    
+    if not(_query in ["",[]])exitWith{
+        
+        ["You are banned from this server!", "red"] remoteExec ["PHX_fnc_notify",_ownerID];
+
+        {
+            _x params ["_reason"];
+            format ["You are banned from this server! Reason #%1: %2",_forEachIndex,_reason] remoteExec ["systemChat",_ownerID,_x];
+        }forEach _query;
+
+        "PHXBANNED" remoteExec ["endMission",_ownerID];
+
+        true
+    };
+
+    false
+};
+
+PHXSVR_fnc_banSpastic = {
+    private _spastic = param [0, objNull,["",objNull]];
+    private _reason = param [1, ""];
+    private _broadcast = param [2,false];
+    
+    private "_steamID";
+
+    if(typeName _spastic isEqualTo "OBJECT")then{
+        _steamID = getPlayerUID _spastic;
+    };
+
+    if(_reason isEqualTo "")then{
+        _reason = "No reason given!";
+    };
+
+    //-- Insert to database `Table : phxbans`
+    [format["INSERT INTO phxbans (uid, reason) VALUES ('%1', '%2')",_steamID,_reason], 1] call DB_fnc_asyncCall;
+    
+    //-- Check if ban was successful and kick
+    if(_steamID call PHXSVR_fnc_checkBanned) exitWith{
+        diag_log format["%1 has been kicked for %2!",_steamID,_reason];
+        if _broadcast then {[format["%1 was banned for: %2",_steamID,_reason], "red"] remoteExec ["PHX_fnc_notify",-2]};
+        true
+    };
+
+    false
+};
+
 // Foggy Woggy Poggy
 for "_i" from 0 to 1 step 0 do {
     if ( fog > 0.05 || { rain >= 0.05 } ) then {

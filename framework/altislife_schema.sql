@@ -493,6 +493,16 @@ INSERT INTO `serversettings` (`name`, `value`, `array`, `restart`) VALUES
 	('Tax', '10', '"[]"', 0);
 /*!40000 ALTER TABLE `serversettings` ENABLE KEYS */;
 
+
+DROP TABLE IF EXISTS `phxbans`;
+CREATE TABLE IF NOT EXISTS `phxbans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `steamID` varchar(17) NOT NULL,
+  `reason` varchar(17) NOT NULL DEFAULT 'No reason specified.',
+  `time_of_ban` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 -- Dumping structure for table altislife_v2.wanted
 CREATE TABLE IF NOT EXISTS `wanted` (
   `wantedID` varchar(64) NOT NULL,

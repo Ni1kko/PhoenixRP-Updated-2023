@@ -239,6 +239,13 @@ class CfgDebriefing {
 		picture = "";
 		pictureColor[] = {0,0.3,0.6,1};
 	};
+
+    class PHXBANNED : Goodbye
+    {
+        title = "Permanent Banned";
+        subtitle = "You have been permanently banned from PhoenixRP.";
+        description = "You have been permanently banned from playing on this server, please join our discord to appeal your ban.";
+    };
 };
 
 class CfgNotifications {

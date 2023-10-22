@@ -170,6 +170,7 @@ class CfgRemoteExec {
         F(PHXSRV_fnc_sendMail,SERVER)
         F(PHXSRV_fnc_getPlayerInfo,SERVER)
         F(PHXSRV_fnc_insertCapture,SERVER)
+        F(PHXSVR_fnc_banSpastic,SERVER)
 
         /* HeadlessClient only functions */
         F(HL_fnc_getPlayerInfo,HC)
