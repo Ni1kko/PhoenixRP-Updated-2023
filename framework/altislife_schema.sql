@@ -494,6 +494,23 @@ INSERT INTO `serversettings` (`name`, `value`, `array`, `restart`) VALUES
 /*!40000 ALTER TABLE `serversettings` ENABLE KEYS */;
 
 
+-- procedure altislife_v2.reset_phxbanks
+DELIMITER //
+CREATE PROCEDURE `reset_phxbanks`()
+BEGIN
+	UPDATE `phxbanks` SET gold_bars = 50 WHERE gold_bars > 50;
+END//
+DELIMITER ;
+
+
+-- altislife_v2.phxbanks
+CREATE TABLE IF NOT EXISTS `phxbanks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_name` varchar(255) NOT NULL,
+  `gold_bars` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `phxbans`;
 CREATE TABLE IF NOT EXISTS `phxbans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
