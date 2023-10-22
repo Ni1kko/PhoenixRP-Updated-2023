@@ -498,7 +498,7 @@ DROP TABLE IF EXISTS `phxbans`;
 CREATE TABLE IF NOT EXISTS `phxbans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `steamID` varchar(17) NOT NULL,
-  `reason` varchar(17) NOT NULL DEFAULT 'No reason specified.',
+  `reason` text NOT NULL,
   `time_of_ban` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
